@@ -8,7 +8,7 @@ This will create an unique ID for each guild member
  
 //Requiring Packages
 const Discord = require('discord.js'); //This can also be discord.js-commando or other node based packages!
-const eco = require("./discordeco.js");
+const eco = require("discord-economy");
  
 //Create the bot client
 const client = new Discord.Client();
@@ -16,7 +16,7 @@ const client = new Discord.Client();
 //Set the prefix and token of the bot.
 const settings = {
   prefix: 'd!',
-  token: 'NTQ2Mzg4ODQwMjM1OTI1NTI0.D298UA.-yOERwHmK3fwEJMbWwoUNE1URWM'
+  token: 'NTQ2Mzg4ODQwMjM1OTI1NTI0.D3DkyQ.KmbnGTrDDOlSxMDDL9kDQoGprg8'
 }
  
 //Whenever someone types a message this gets activated.
