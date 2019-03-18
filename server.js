@@ -15,7 +15,7 @@ const client = new Discord.Client();
  
 //Set the prefix and token of the bot.
 const settings = {
-  prefix: 'd!','D!',
+  prefix: 'd!',
   token: 'NTQ2Mzg4ODQwMjM1OTI1NTI0.D3DkyQ.KmbnGTrDDOlSxMDDL9kDQoGprg8'
 }
  
