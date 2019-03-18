@@ -17,7 +17,7 @@ const client = new Discord.Client();
 //Set the prefix and token of the bot.
 const settings = {
   prefix: 'd!',
-  token: 'NTQ2Mzg4ODQwMjM1OTI1NTI0.D3Dptw.uUXYz5pr49jY0GQEugmtDT1xwfg'
+  token: 'NTQ2Mzg4ODQwMjM1OTI1NTI0.D3DvCA.yKcf0sKWNAhKlJdo_zUhMYWVy_4'
 }
  
 //Whenever someone types a message this gets activated.
@@ -37,7 +37,7 @@ client.on('message', async message => {
   if (command === 'bal') {
  
     var output = await eco.FetchBalance(message.author.id)
-    message.channel.send(`Hey ${message.author.tag}! You own ${output.balance} coins.`);
+    return message.channel.send(`Hey ${message.author.tag}! You own ${output.balance} coins.`);
   }
  
   if (command === 'daily') {
@@ -48,10 +48,10 @@ client.on('message', async message => {
     if (output.updated) {
  
       var profile = await eco.AddToBalance(message.author.id, 100)
-      message.reply(`You claimed your daily coins succesfully! You now own ${profile.newbalance} coins.`);
+      return message.reply(`You claimed your daily coins succesfully! You now own ${profile.newbalance} coins.`);
  
     } else {
-      message.channel.send(`Sorry, you already claimed your daily coins!\nBut no worries, over ${output.timetowait} you can daily again!`)
+      return message.channel.send(`Sorry, you already claimed your daily coins!\nBut no worries, over ${output.timetowait} you can daily again!`)
     }
  
   }
@@ -60,7 +60,7 @@ client.on('message', async message => {
  
     var output = await eco.ResetDaily(message.author.id)
  
-    message.reply(output) //It wil send 'Daily Reset.'
+    return message.reply(output) //It wil send 'Daily Reset.'
  
   }
  
@@ -77,7 +77,7 @@ client.on('message', async message => {
         filter: x => x.balance > 50,
         search: message.mentions.users.first().id
       })
-      message.channel.send(`The user ${message.mentions.users.first().tag} is number ${output} on my leaderboard!`);
+      return message.channel.send(`The user ${message.mentions.users.first().tag} is number ${output} on my leaderboard!`);
  
     } else {
  
@@ -113,10 +113,10 @@ client.on('message', async message => {
     if (output.balance < amount) return message.reply('You have less coins than the amount you want to transfer!')
  
     var transfer = await eco.Transfer(message.author.id, user.id, amount)
-    message.reply(`Transfering coins succesfully done!\nBalance from ${message.author.tag}: ${transfer.FromUser}\nBalance from ${user.tag}: ${transfer.ToUser}`);
+    return message.reply(`Transfering coins succesfully done!\nBalance from ${message.author.tag}: ${transfer.FromUser}\nBalance from ${user.tag}: ${transfer.ToUser}`);
   }
  
-  if (command === 'coinflipp') {
+  if (command === 'coinflip') {
  
     var flip = args[0] //Heads or Tails
     var amount = args[1] //Coins to gamble
@@ -128,11 +128,11 @@ client.on('message', async message => {
     if (output.balance < amount) return message.reply('You have less coins than the amount you want to gamble!')
  
     var gamble = await eco.Coinflip(message.author.id, flip, amount).catch(console.error)
-    message.reply(`You ${gamble.output}! New balance: ${gamble.newbalance}`)
+    return message.reply(`You ${gamble.output}! New balance: ${gamble.newbalance}`)
  
   }
  
-  if (command === 'dicee') {
+  if (command === 'dice') {
  
     var roll = args[0] //Should be number between 1 and 6
     var amount = args[1] //Coins to gamble
@@ -144,7 +144,7 @@ client.on('message', async message => {
     if (output.balance < amount) return message.reply('You have less coins than the amount you want to gamble!')
  
     var gamble = await eco.Dice(message.author.id, roll, amount).catch(console.error)
-    message.reply(`The dice rolled ${gamble.dice}. So you ${gamble.output}! New balance: ${gamble.newbalance}`)
+    return message.reply(`The dice rolled ${gamble.dice}. So you ${gamble.output}! New balance: ${gamble.newbalance}`)
  
   }
  
@@ -158,7 +158,7 @@ client.on('message', async message => {
     var output = await eco.Delete(user.id)
     if (output.deleted == true) return message.reply('Succesfully deleted the user out of the database!')
  
-    message.reply('Error: Could not find the user in database.')
+    return message.reply('Error: Could not find the user in database.')
  
   }
  
