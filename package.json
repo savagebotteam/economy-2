@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "",
     "discord.js": "",
-    "discord-economy": "*",
+    "discord-economy": "*"
  },
   "license": "MIT",
   "keywords": [
