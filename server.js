@@ -9,14 +9,15 @@ This will create an unique ID for each guild member
 //Requiring Packages
 const Discord = require('discord.js'); //This can also be discord.js-commando or other node based packages!
 const eco = require("discord-economy");
- 
+const talkedRecently = new Set();
+
 //Create the bot client
 const client = new Discord.Client();
  
 //Set the prefix and token of the bot.
 const settings = {
   prefix: 'd!',
-  token: 'NTQ2Mzg4ODQwMjM1OTI1NTI0.D3DkyQ.KmbnGTrDDOlSxMDDL9kDQoGprg8'
+  token: 'NTQ2Mzg4ODQwMjM1OTI1NTI0.D3Dptw.uUXYz5pr49jY0GQEugmtDT1xwfg'
 }
  
 //Whenever someone types a message this gets activated.
@@ -163,26 +164,25 @@ client.on('message', async message => {
  
   if (command === 'work') { //I made 2 examples for this command! Both versions will work!
  
-    var output = await eco.Work(message.author.id)
-    //50% chance to fail and earn nothing. You earn between 1-100 coins. And you get one out of 20 random jobs.
-    if (output.earned == 0) return message.reply('Aww, you did not do your job well so you earned nothing!')
-    message.channel.send(`${message.author.username}
-You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned}
-You now own :money_with_wings: ${output.balance}`)
+    if (talkedRecently.has(message.author.id)) {
+      return message.channel.send("You can use this command only once in every 4hours. " + message.author);
+   }else{
+      var output = await eco.Work(message.author.id, {
+        failurerate: 10,
+        money: Math.floor(Math.random() * 500),
+        jobs: ['cashier', 'shopkeeper', 'youtuber', 'landlord', 'farmer', 'doctor', 'fisher', 'slave']
+      })
+      //10% chance to fail and earn nothing. You earn between 1-500 coins. And you get one of those 3 random jobs.
+      if (output.earned == 0) return message.reply('Aww, you did not do your job well so you earned nothing!')
  
- 
-    var output = await eco.Work(message.author.id, {
-      failurerate: 10,
-      money: Math.floor(Math.random() * 500),
-      jobs: ['cashier', 'shopkeeper']
-    })
-    //10% chance to fail and earn nothing. You earn between 1-500 coins. And you get one of those 3 random jobs.
-    if (output.earned == 0) return message.reply('Aww, you did not do your job well so you earned nothing!')
- 
-    message.channel.send(`${message.author.username}
-You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned}
-You now own :money_with_wings: ${output.balance}`)
- 
+      message.channel.send(`${message.author.username} You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned} You now own :money_with_wings: ${output.balance}`)
+      talkedRecently.add(message.author.id);
+      setTimeout(() => {
+        // Removes the user from the set after a minute
+        talkedRecently.delete(message.author.id);
+      }, 14400000);
+  }
+
   }
  
 });
