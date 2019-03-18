@@ -15,7 +15,7 @@ const client = new Discord.Client();
  
 //Set the prefix and token of the bot.
 const settings = {
-  prefix: 'd!',
+  prefix: 'd!','D!',
   token: 'NTQ2Mzg4ODQwMjM1OTI1NTI0.D3DkyQ.KmbnGTrDDOlSxMDDL9kDQoGprg8'
 }
  
@@ -33,7 +33,7 @@ client.on('message', async message => {
   //If the user that types a message is a bot account return.
   if (!message.content.startsWith(settings.prefix) || message.author.bot) return;
  
-  if (command === 'balance') {
+  if (command === 'bal') {
  
     var output = await eco.FetchBalance(message.author.id)
     message.channel.send(`Hey ${message.author.tag}! You own ${output.balance} coins.`);
@@ -63,7 +63,7 @@ client.on('message', async message => {
  
   }
  
-  if (command === 'leaderboard') {
+  if (command === 'lb') {
  
     //If you use discord-economy guild based you can use the filter() function to only allow the database within your guild
     //(message.author.id + message.guild.id) can be your way to store guild based id's
